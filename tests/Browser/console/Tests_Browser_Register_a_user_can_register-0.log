@@ -1,0 +1,26 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/127.0.0.1:8000\/js\/app.js 40365:14 \"[Vue warn]: Do not use built-in or reserved HTML elements as component id: video\"",
+        "source": "console-api",
+        "timestamp": 1637507312538
+    },
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/127.0.0.1:8000\/js\/app.js 40365:14 \"[Vue warn]: Do not use built-in or reserved HTML elements as component id: video\"",
+        "source": "console-api",
+        "timestamp": 1637507312538
+    },
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/127.0.0.1:8000\/js\/app.js 40365:14 \"[Vue warn]: Do not use built-in or reserved HTML elements as component id: video\"",
+        "source": "console-api",
+        "timestamp": 1637507314124
+    },
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/127.0.0.1:8000\/js\/app.js 40365:14 \"[Vue warn]: Do not use built-in or reserved HTML elements as component id: video\"",
+        "source": "console-api",
+        "timestamp": 1637507314124
+    }
+]
