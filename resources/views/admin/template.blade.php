@@ -20,7 +20,8 @@
   <!-- CSS Files -->
   <link id="pagestyle" href="{{asset('assets/css/soft-ui-dashboard.css?v=1.0.3')}}" rel="stylesheet" />
   <script src="http://unpkg.com/turbolinks"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
 </head>
 
@@ -30,9 +31,9 @@
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
       <div class="sidenav-header">
         <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
-        <a class="navbar-brand m-0" href="https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html" target="_blank">
+        <a class="navbar-brand m-0" href="dashboard">
           <img src="{{asset('assets/img/logo-ct.png')}}" class="navbar-brand-img h-100" alt="main_logo">
-          <span class="ms-1 font-weight-bold">Soft UI Dashboard</span>
+          <span class="ms-1 font-weight-bold">Midomey</span>
         </a>
       </div>
       <hr class="horizontal dark mt-0">
@@ -60,7 +61,10 @@
           </li>
           @if(auth()->user()->role_as == 10)      
           <li class="nav-item">
-            <a class="nav-link  {{(request()->is('admin/categories')) || (request()->is('admin/create/category')) ? 'active' : ''}} " href="{{route('admin.categories')}}">
+            <a class="nav-link  {{(request()->is('admin/categories')) 
+              || (request()->is('admin/create/category')) 
+              || (request()->is('admin/edit/category/*')) 
+              ? 'active' : ''}} " href="{{route('admin.categories')}}">
               <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <title>office</title>
@@ -86,7 +90,7 @@
               {{
                  (request()->is('admin/series')) 
               || (request()->is('admin/create/series')) 
-              || (request()->is('admin/edit/series/id')) 
+              || (request()->is('admin/edit/series/*')) 
                   ? 'active' : ''
               }}" href="{{route('admin.series')}}">
 
@@ -109,7 +113,10 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {{(request()->is('admin/videos')) || (request()->is('admin/create/video')) ? 'active' : ''}}" href="{{route('admin.videos')}}">
+            <a class="nav-link {{(request()->is('admin/videos')) 
+            || (request()->is('admin/create/video')) 
+            || (request()->is('admin/edit/video/*')) 
+            ? 'active' : ''}}" href="{{route('admin.videos')}}">
               <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <title>credit-card</title>
@@ -154,7 +161,9 @@
 
           @if(auth()->user()->role_as == 10)      
           <li class="nav-item">
-            <a class="nav-link {{(request()->is('admin/users')) || (request()->is('admin/create/user')) ? 'active' : ''}}" href="{{route('admin.users')}}">
+            <a class="nav-link 
+            {{(request()->is('admin/users')) || (request()->is('admin/create/user'))
+            || (request()->is('admin/edit/user/*')) ? 'active' : ''}}" href="{{route('admin.users')}}">
               <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <title>credit-card</title>
@@ -177,7 +186,10 @@
 
           @if(auth()->user()->role_as == 10)      
           <li class="nav-item">
-            <a class="nav-link  {{(request()->is('admin/plans')) || (request()->is('admin/create/plan')) ? 'active' : ''}} " href="{{route('admin.plans')}}">
+            <a class="nav-link  {{(request()->is('admin/plans')) 
+              || (request()->is('admin/plan/create')) 
+              || (request()->is('admin/plan/edit/*')) 
+              ? 'active' : ''}} " href="{{route('admin.plans')}}">
               <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                   <title>office</title>
@@ -266,6 +278,29 @@
             </a>
           </li>
 
+          @if(auth()->user()->role_as == 10)      
+            <li class="nav-item">
+              <a class="nav-link  {{(request()->is('admin/mails')) ? 'active' : ''}} " href="{{route('admin.mails')}}">
+                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                  <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <title>office</title>
+                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                      <g transform="translate(-1869.000000, -293.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                        <g transform="translate(1716.000000, 291.000000)">
+                          <g id="office" transform="translate(153.000000, 2.000000)">
+                            <path class="color-background opacity-6" d="M12.25,17.5 L8.75,17.5 L8.75,1.75 C8.75,0.78225 9.53225,0 10.5,0 L31.5,0 C32.46775,0 33.25,0.78225 33.25,1.75 L33.25,12.25 L29.75,12.25 L29.75,3.5 L12.25,3.5 L12.25,17.5 Z"></path>
+                            <path class="color-background" d="M40.25,14 L24.5,14 C23.53225,14 22.75,14.78225 22.75,15.75 L22.75,38.5 L19.25,38.5 L19.25,22.75 C19.25,21.78225 18.46775,21 17.5,21 L1.75,21 C0.78225,21 0,21.78225 0,22.75 L0,40.25 C0,41.21775 0.78225,42 1.75,42 L40.25,42 C41.21775,42 42,41.21775 42,40.25 L42,15.75 C42,14.78225 41.21775,14 40.25,14 Z M12.25,36.75 L7,36.75 L7,33.25 L12.25,33.25 L12.25,36.75 Z M12.25,29.75 L7,29.75 L7,26.25 L12.25,26.25 L12.25,29.75 Z M35,36.75 L29.75,36.75 L29.75,33.25 L35,33.25 L35,36.75 Z M35,29.75 L29.75,29.75 L29.75,26.25 L35,26.25 L35,29.75 Z M35,22.75 L29.75,22.75 L29.75,19.25 L35,19.25 L35,22.75 Z"></path>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+                <span class="{{route('admin.mails')}}">Mails</span>
+              </a>
+            </li>
+          @endif
+
 
         </ul>
       </div>
@@ -285,7 +320,7 @@
             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
               <div class="input-group">
                 <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" placeholder="Type here...">
+                <input id="search" type="text" class="form-control" placeholder="Type here...">
               </div>
             </div>
             <ul class="navbar-nav  justify-content-end">
@@ -411,6 +446,18 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{asset('assets/js/soft-ui-dashboard.min.js?v=1.0.3')}}"></script>
+
+    <script>
+      $(document).ready(function(){
+        $("#search").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#myTable tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      });
+    </script>
+
 </body>
 
 

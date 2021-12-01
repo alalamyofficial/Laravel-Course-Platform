@@ -49,12 +49,15 @@ class VideoController extends Controller
         if(auth()->user()->role_as == 10){
 
             $videos = Video::latest()->get();
+            $videos_count = Video::all()->count();
 
         }elseif(auth()->user()->role_as == 1){
             
             $userId = request()->user()->id;
 
             $videos = Video::where('user_id',$userId)->latest()->get();
+            $videos_count = Video::where('user_id',$userId)->latest()->get()->count();
+
         }else{
             return 'you have no authorization to go to here';
         }
@@ -62,7 +65,7 @@ class VideoController extends Controller
         
 
 
-        return view('admin.videos.show',compact('series','categories','videos'));
+        return view('admin.videos.show',compact('series','categories','videos','videos_count'));
 
     }
 
@@ -190,5 +193,14 @@ class VideoController extends Controller
 
     }
 
+    public function destroy($id){
+
+        $video = Video::findOrFail($id);
+
+        $video->destroy($id);
+
+        return redirect()->back()->with('error','Video Deleted Successfully');
+
+    }
 
 }

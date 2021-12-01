@@ -52,4 +52,9 @@ class User extends Authenticatable
 
         return $this->hasMany(Video::class);
     }
+
+    public function mails(){
+
+        return $this->hasMany(Mail::class);
+    }
 }

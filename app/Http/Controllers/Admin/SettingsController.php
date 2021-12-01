@@ -17,6 +17,13 @@ class SettingsController extends Controller
 
     public function update(Request $request){
 
+        $this->validate($request,[
+
+            'site_name' => 'required',
+            'about' => 'sometimes',
+
+        ]);
+
         $settings = new Setting;
         
         $settings->site_name = $request->site_name;

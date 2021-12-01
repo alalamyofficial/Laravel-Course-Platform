@@ -13,6 +13,9 @@ window.Vue = require('vue');
 // const player = videojs('my-video');
 // player.watermark();
 
+import VueVideoPlayer from 'vue-video-player'
+import 'video.js/dist/video-js.css'
+Vue.use(VueVideoPlayer)
 
 /**
  * The following block of code may be used to automatically register your
@@ -29,8 +32,9 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('dashboard', require('./components/Dashboard.vue').default);
 Vue.component('category', require('./components/Category.vue').default);
 Vue.component('episodes', require('./components/Episodes.vue').default);
-Vue.component('video', require('./components/Video.vue').default);
+Vue.component('one-video', require('./components/Video.vue').default);
 Vue.component('pricing', require('./components/Pricing.vue').default);
+Vue.component('playlist', require('./components/PlayList.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

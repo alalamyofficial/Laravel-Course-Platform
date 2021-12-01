@@ -23,17 +23,19 @@ class SeriesController extends Controller
         if(auth()->user()->role_as == 10){
 
             $series = Series::latest()->get();
+            $series_count = Series::all()->count();
 
         }elseif(auth()->user()->role_as == 1){
             
             $userId = request()->user()->id;
 
             $series = Series::where('user_id',$userId)->latest()->get();
+            $series_count = Series::where('user_id',$userId)->latest()->get()->count();
         }else{
             abort(404);
         }
 
-        return view('admin.series.show',compact('series','categories'));
+        return view('admin.series.show',compact('series','categories','series_count'));
 
     }
 
@@ -135,4 +137,13 @@ class SeriesController extends Controller
 
     }
 
+    public function destroy($id){
+
+        $series = Series::findOrFail($id);
+
+        $series->destroy($id);
+
+        return redirect()->back()->with('error','Series Deleted Successfully');
+
+    }
 }

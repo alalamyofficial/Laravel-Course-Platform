@@ -14,6 +14,9 @@ use Auth;
 use DB;
 use Laravel\Cashier\Billable;
 use App\Setting;
+// use FFProbe;
+use FFMpeg;
+use URL;
 
 class PlatformController extends Controller
 {
@@ -43,14 +46,23 @@ class PlatformController extends Controller
 
         if(Auth::guard()){
             $ratings = Rating::where('user_id',request()->user()->id)->first();
+        }else{
+            return 'nope';
         }
 
         $series_videos = $series->videos()->get();
 
-        $rating = Rating::first();    
+        $rating = Rating::first(); 
+        
+        // $getID3 = new \getID3;
+        // $file = $getID3->analyze($video_path);
+        // $duration = date('H:i:s.v', $file['playtime_seconds']);
+        
+        $current_url = Url::current();
 
         return view('platform.series.course_details',
-        compact('categories','series','one_video','first_video','ratings','rating','series_videos','settings'));
+        compact('categories','series','one_video','first_video',
+        'ratings','rating','series_videos','settings','current_url'));
 
     }
 
@@ -61,6 +73,9 @@ class PlatformController extends Controller
         $one_video = $series->videos()->where('episode_number',$episode_number)->first();
         $settings = Setting::latest()->limit(1)->first();
 
+        $video_duration = $series->videos()->where('episode_number',$episode_number)->first();
+
+
 
         $seriesID = $request->series_id;
 
@@ -70,6 +85,7 @@ class PlatformController extends Controller
 
 
         $nextVideo= $series->videos()->where('episode_number', $episode_number+1)->first();
+
 
         $prevVideo = Video::where('episode_number','<', $one_video->episode_number )
                             ->orderBy('episode_number','desc')
@@ -82,16 +98,22 @@ class PlatformController extends Controller
 
         $comments = Comment::where('video_id',$one_video->id)->latest()->get(); 
 
+        $current_url = URL::current();
+
+        $current_video = $series->videos()->where('episode_number','=', $episode_number)->first();
+
         return view('platform.series.video',
             compact(
                 'categories','series','one_video','videos',
                 'nextVideo','prevVideo','first_video','last_video',
-                'series_videos','settings','comments'
+                'series_videos','settings','comments','video_duration'
+                ,'current_url','current_video'
             )
         );        
 
 
     }
+
 
     public function seriesStar (Request $request, Series $series) {
         $rating = new Rating;

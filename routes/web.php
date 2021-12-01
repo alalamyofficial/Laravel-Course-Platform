@@ -23,60 +23,74 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //admin
 
-Route::group(['middleware' => ['auth','is_Admin']], function () {
+Route::group(['middleware' => ['auth','is_Admin'], 'prefix' => 'admin'] ,function () {
 
     //Dashboard
-    Route::get('admin/dashboard','AdminController@dashboard')->name('admin.dashboard');
+    Route::get('dashboard','AdminController@dashboard')->name('admin.dashboard');
     
     //Categories
-    Route::get('admin/categories','Admin\CategoryController@categories')->name('admin.categories');
-    Route::get('admin/create/category','Admin\CategoryController@add_category')->name('admin.category.create');
-    Route::post('admin/store/category','Admin\CategoryController@store')->name('admin.category.store');
-    Route::get('admin/edit/category/{id}','Admin\CategoryController@edit')->name('admin.category.edit');
-    Route::patch('admin/update/category/{id}','Admin\CategoryController@update')->name('admin.category.update');
-    Route::delete('admin/destroy/category/{id}','Admin\CategoryController@destroy')->name('admin.category.destroy');
+    Route::get('categories','Admin\CategoryController@categories')->name('admin.categories');
+    Route::get('create/category','Admin\CategoryController@add_category')->name('admin.category.create');
+    Route::post('store/category','Admin\CategoryController@store')->name('admin.category.store');
+    Route::get('edit/category/{id}','Admin\CategoryController@edit')->name('admin.category.edit');
+    Route::patch('update/category/{id}','Admin\CategoryController@update')->name('admin.category.update');
+    Route::delete('destroy/category/{id}','Admin\CategoryController@destroy')->name('admin.category.destroy');
     
     //Series
-    Route::get('admin/series','Admin\SeriesController@series')->name('admin.series');
-    Route::get('admin/create/series','Admin\SeriesController@add_series')->name('admin.series.create');
-    Route::post('admin/store/series','Admin\seriesController@store')->name('admin.series.store');
-    Route::get('admin/edit/series/{id}','Admin\SeriesController@edit')->name('admin.series.edit');
-    Route::patch('admin/update/series/{id}','Admin\SeriesController@update')->name('admin.series.update');
+    Route::get('series','Admin\SeriesController@series')->name('admin.series');
+    Route::get('create/series','Admin\SeriesController@add_series')->name('admin.series.create');
+    Route::post('store/series','Admin\seriesController@store')->name('admin.series.store');
+    Route::get('edit/series/{id}','Admin\SeriesController@edit')->name('admin.series.edit');
+    Route::patch('update/series/{id}','Admin\SeriesController@update')->name('admin.series.update');
+    Route::delete('delete/series/{id}','Admin\SeriesController@destroy')->name('admin.series.destroy');
     
     
     //Videos
-    Route::get('admin/videos','Admin\VideoController@videos')->name('admin.videos');
-    Route::get('admin/create/video','Admin\VideoController@add_video')->name('admin.video.create');
-    Route::post('admin/store/video','Admin\VideoController@store')->name('admin.videos.store');
-    Route::get('admin/edit/video/{id}','Admin\VideoController@edit')->name('admin.video.edit');
-    Route::patch('admin/update/update/{id}','Admin\VideoController@update')->name('admin.video.update');
+    Route::get('videos','Admin\VideoController@videos')->name('admin.videos');
+    Route::get('create/video','Admin\VideoController@add_video')->name('admin.video.create');
+    Route::post('store/video','Admin\VideoController@store')->name('admin.videos.store');
+    Route::get('edit/video/{id}','Admin\VideoController@edit')->name('admin.video.edit');
+    Route::patch('update/video/{id}','Admin\VideoController@update')->name('admin.video.update');
+    Route::delete('delete/video/{id}','Admin\VideoController@destroy')->name('admin.video.destroy');
     
     
     //Users
-    Route::get('admin/users','Admin\UserController@users')->name('admin.users');
-    Route::get('admin/create/user','Admin\UserController@add_user')->name('admin.user.create');
-    Route::post('admin/store/user','Admin\UserController@store')->name('admin.user.store');
-
+    Route::get('users','Admin\UserController@users')->name('admin.users');
+    Route::get('create/user','Admin\UserController@add_user')->name('admin.user.create');
+    Route::post('store/user','Admin\UserController@store')->name('admin.user.store');
+    Route::get('edit/user/{id}','Admin\UserController@edit')->name('admin.user.edit');
+    Route::patch('update/user/{id}','Admin\UserController@update')->name('admin.user.update');
+    Route::delete('delete/user/{id}','Admin\UserController@destroy')->name('admin.user.destroy');
     
     //Ratings
-    Route::get('admin/ratings','Admin\RatingController@ratings')->name('admin.ratings');
+    Route::get('ratings','Admin\RatingController@ratings')->name('admin.ratings');
 
     //Plans
-    Route::get('admin/plans','Admin\PlanController@plans')->name('admin.plans');
+    Route::get('plan/create','Admin\PlanController@create')->name('admin.plan.create');
+    Route::get('plans','Admin\PlanController@plans')->name('admin.plans');
+    Route::post('plan/store','Admin\PlanController@store')->name('admin.plan.store');
+    Route::get('plan/edit/{id}','Admin\PlanController@edit')->name('admin.plan.edit');
+    Route::patch('plan/update/{id}','Admin\PlanController@update')->name('admin.plan.update');
+    Route::delete('plan/destroy/{id}','Admin\PlanController@destroy')->name('admin.plan.destroy');
+
+
 
     //Subscription
-    Route::get('admin/subscriptions','Admin\SubscriptionController@subscriptions')->name('admin.subscriptions');
-    Route::get('admin/subscription/destroy/{id}','Admin\SubscriptionController@destroy')
+    Route::get('subscriptions','Admin\SubscriptionController@subscriptions')->name('admin.subscriptions');
+    Route::delete('subscription/destroy/{id}','Admin\SubscriptionController@destroy')
             ->name('admin.subscription.destroy');
 
     //Comment        
-    Route::get('admin/comments','Admin\CommentController@comments')->name('admin.comments');        
-    Route::get('admin/comment/destroy','Admin\CommentController@destroy')->name('admin.comment.destroy');        
+    Route::get('comments','Admin\CommentController@comments')->name('admin.comments');        
+    Route::get('comment/destroy','Admin\CommentController@destroy')->name('admin.comment.destroy');        
 
     //Settings
-    Route::get('admin/settings','Admin\SettingsController@settings')->name('admin.settings');
-    Route::patch('admin/settings/update','Admin\SettingsController@update')->name('admin.settings.update');
-        
+    Route::get('settings','Admin\SettingsController@settings')->name('admin.settings');
+    Route::patch('settings/update','Admin\SettingsController@update')->name('admin.settings.update');
+
+    //Mail        
+    Route::get('mails','Admin\MailController@mails')->name('admin.mails');        
+    Route::delete('mail/destroy/{id}','Admin\MailController@destroy')->name('admin.mail.destroy');   
 
 });
 

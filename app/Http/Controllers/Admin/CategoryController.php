@@ -15,12 +15,14 @@ class CategoryController extends Controller
         if(auth()->user()->role_as == 10){
 
             $categories = Category::latest()->get();
+            $categories_count = Category::all()->count();
+
 
         }else{
             abort(404);
         }
 
-        return view('admin.categories.show',compact('categories'));
+        return view('admin.categories.show',compact('categories','categories_count'));
     }
 
     
@@ -114,7 +116,7 @@ class CategoryController extends Controller
 
         $category->destroy($id);
 
-        return redirect()->back();
+        return redirect()->back()->with('error','Category Deleted Successfully');
 
     }
 

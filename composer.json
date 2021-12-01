@@ -12,10 +12,12 @@
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
+        "james-heinrich/getid3": "^1.9",
         "laravel/cashier": "^12.15",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "2.4",
+        "pbmedia/laravel-ffmpeg": "^7.5",
         "realrashid/sweet-alert": "^4.1",
         "willvincent/laravel-rateable": "^2.3"
     },

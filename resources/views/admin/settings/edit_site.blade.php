@@ -16,12 +16,11 @@
             @csrf
             @method('patch')
 
-            @foreach($settings as $set)
                 <label for="site_name">Site Name</label>
                 <div class="col-lg-12 col-md-6 mb-1">
                     <div class="form-group">
                         <input type="text" name="site_name" 
-                        value="{{$set->site_name}}" class="form-control" placeholder="Write Name">
+                        value="" class="form-control" placeholder="Write Name">
                     </div>
                 </div>
 
@@ -29,11 +28,10 @@
                 <div class="col-lg-12 col-md-6 mb-2">
                     <div class="form-group">
                         <textarea type="text" name="about" class="form-control" 
-                        placeholder="Write Site About"> {{$set->about}}
+                        placeholder="Write Site About">
                         </textarea>
                     </div>
                 </div>
-            @endforeach    
 
                 <button type="submit" class="btn btn-outline-info">Update</button>
 

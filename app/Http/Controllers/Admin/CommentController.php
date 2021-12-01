@@ -15,12 +15,14 @@ class CommentController extends Controller
         if(auth()->user()->role_as == 10){
 
             $comments = Comment::latest()->get();
+            $comments_count = Comment::all()->count();
 
         }elseif(auth()->user()->role_as == 1){
 
             $userId = request()->user()->id;
             $video = Video::where('user_id',$userId)->first();
             $comments = Comment::where('video_id',$video->id)->get();
+            $comments_count = Comment::where('video_id',$video->id)->get()->count();
 
         }
         else{
@@ -28,7 +30,7 @@ class CommentController extends Controller
         }
 
 
-        return view('admin.comments.show',compact('comments'));
+        return view('admin.comments.show',compact('comments','comments_count'));
 
     }
 
