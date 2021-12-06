@@ -32,8 +32,8 @@
 
   .desc{
 
-    margin-left: 174px;
-    width: 1065px;
+    margin-left: 210px;
+    width: 1050px;
 
   }
 
@@ -71,10 +71,18 @@
     <one-video 
         :one_video="{{$one_video}}" 
         :series="{{$series}}"
-        :series_videos="{{$series_videos}}" 
-        :next_video="{{$nextVideo}}"
+        :series_videos="{{$series_videos}}"
+
+        @if($nextVideo)
+          :next_video="{{$nextVideo}}"
+        @else
+        @endif    
+
         :video_duration = "{{$video_duration}}"
         :current_video = "{{$current_video}}"
+        :vids = "{{$vids}}"
+        :user="{{Auth::id()}}"
+        :last_video="{{$last_video}}"
     >
     </one-video>
 

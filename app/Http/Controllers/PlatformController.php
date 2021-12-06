@@ -3,19 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Laravel\Cashier\Billable;
+use RealRashid\SweetAlert\Facades\Alert;
 use App\Category;
 use App\Series;
 use App\Video;
 use App\Rating;
 use App\Plans;
 use App\Comment;
+use App\Setting;
 use App\User;
 use Auth;
 use DB;
-use Laravel\Cashier\Billable;
-use App\Setting;
-// use FFProbe;
-use FFMpeg;
 use URL;
 
 class PlatformController extends Controller
@@ -28,10 +27,13 @@ class PlatformController extends Controller
 
         $categories = Category::latest()->limit(5)->get();
         $series = Series::latest()->where('plan','=','free')->limit(10)->get();
+        $series_id = Series::first()->id;
+        $one_series = Series::where('id',$series_id)->first();
+        $series_ratings_count = Rating::where('rateable_id',$one_series->id)->count();
         $plans = Plans::get();
         $settings = Setting::latest()->limit(1)->first();
 
-        return view('platform.site',compact('categories','series','plans','settings'));
+        return view('platform.site',compact('categories','series','plans','settings','series_ratings_count'));
 
     }
 
@@ -83,6 +85,8 @@ class PlatformController extends Controller
 
         $series_videos = $series->videos()->get();
 
+        $vids= Video::where('episode_number', $episode_number)->get();
+
 
         $nextVideo= $series->videos()->where('episode_number', $episode_number+1)->first();
 
@@ -107,7 +111,7 @@ class PlatformController extends Controller
                 'categories','series','one_video','videos',
                 'nextVideo','prevVideo','first_video','last_video',
                 'series_videos','settings','comments','video_duration'
-                ,'current_url','current_video'
+                ,'current_url','current_video','vids'
             )
         );        
 
@@ -121,19 +125,20 @@ class PlatformController extends Controller
         $rating->rating = $request->input('star');
         $rating->feedback = $request->feedback;
         $series->ratings()->save($rating);
+        toast('Your Rating has Been Successfully!','success');
         return redirect()->back();
     }
 
     
-    public function updateSeriesStar (Request $request, $user_id) {
+    // public function updateSeriesStar (Request $request, $user_id) {
 
 
-        $rating = DB::table('ratings')->where('user_id',$user_id)->first();
+    //     $rating = DB::table('ratings')->where('user_id',$user_id)->first();
 
-        $rating->destroy($user_id);
+    //     $rating->destroy($user_id);
 
-        return redirect()->back();
-    }
+    //     return redirect()->back();
+    // }
 
     public function plans() {
         $plans = Plans::get();
@@ -231,4 +236,18 @@ class PlatformController extends Controller
         return view('platform.about',compact('categories','settings'));
 
     }
+
+    public function authors_series($slug){
+
+        $user_id = request()->user()->id;
+
+        $user = User::where('id',$user_id)->where('role_as','=',1);
+
+        $author_series = $user->series()->lastest()->get();
+
+        return view('platform.series.author_courses',compact('author_series'));
+
+
+    }
+
 }

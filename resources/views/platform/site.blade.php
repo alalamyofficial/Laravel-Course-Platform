@@ -102,7 +102,7 @@
                     <a href="#"><i class="fa fa-star"></i></a>
                   </li>
                 </ul>
-                <p class="ml-20">25 Reviews</p>
+                <p class="ml-20">{{$series_ratings_count}} Reviews</p>
               </div>
             </div>
           </div>
@@ -396,7 +396,10 @@
     <!-- ================ End Blog Post Area ================= -->
   </div>
 
+
   @include('platform.footer')
+
+
 
 </body>
 

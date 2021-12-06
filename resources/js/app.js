@@ -17,6 +17,12 @@ import VueVideoPlayer from 'vue-video-player'
 import 'video.js/dist/video-js.css'
 Vue.use(VueVideoPlayer)
 
+import Toast from "vue-toastification";
+// Import the CSS or use your own!
+import "vue-toastification/dist/index.css";
+
+Vue.use(Toast);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

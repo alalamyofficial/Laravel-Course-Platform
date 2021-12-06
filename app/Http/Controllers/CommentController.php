@@ -54,7 +54,8 @@ class CommentController extends Controller
 
         $comment->save();
 
-        return redirect()->back();
+        // return redirect()->back();
+        return response()->json('Comment Added Succesfully');
 
     }
 
@@ -64,9 +65,11 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
+    public function show(Comment $comment , Video $video)
     {
-        //
+        $comments = Comment::where('video_id',$video->id)->latest()->get(); 
+
+        return $comments;
     }
 
     /**
@@ -98,8 +101,11 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(Comment $comment , $id)
     {
-        //
+        $comment = Comment::find($id);
+        $comment->delete();
+
+        return response()->json("Comment Removed Successfully");
     }
 }

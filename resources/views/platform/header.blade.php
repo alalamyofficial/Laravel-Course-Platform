@@ -51,6 +51,7 @@
 
 
   <!-- <link href="plugins/css/videojs.thumbnails.css" rel="stylesheet"> -->
+  <!-- <script src="{{ asset('js/app.js') }}" defer></script> -->
 
 
 

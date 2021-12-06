@@ -26,6 +26,8 @@
     "dependencies": {
         "@vimeo/player": "^2.16.1",
         "videojs-watermark": "^2.0.0",
+        "vue-toast-notification": "^2.0.1",
+        "vue-toastification": "^1.7.14",
         "vue-video-player": "^5.0.2"
     }
 }

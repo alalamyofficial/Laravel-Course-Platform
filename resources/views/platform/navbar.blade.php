@@ -40,23 +40,17 @@
 
             <li><a href="{{route('contact')}}">Contacts</a></li>
 
+            
             <li>
-              <button class="search">
-                <span class="lnr lnr-magnifier" id="search"></span>
-              </button>
+              <small>
+                @include('search')
+              </small>
             </li>
+
           </ul>
         </div>
       </div>
     </nav>
-    <div class="search-input" id="search-input-box">
-      <div class="container">
-        <form class="d-flex justify-content-between">
-          <input type="text" class="form-control" id="search-input" placeholder="Search Here" />
-          <button type="submit" class="btn"></button>
-          <span class="lnr lnr-cross" id="close-search" title="Close Search"></span>
-        </form>
-      </div>
-    </div>
+
   </header>
   <!-- ================ End Header Area ================= -->

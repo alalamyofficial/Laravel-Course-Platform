@@ -123,6 +123,13 @@ Route::post('message/send','MailController@send_mail')->name('send.message');
 //About
 Route::get('about','PlatformController@about')->name('about');
 
+//Search Controller | Search User
+Route::get('/search', 'SearchController@search')->name('search');
+
+
+Route::get('courses/{slug}','PlatformController@authors_series')->name('authors_series');
+
+
 
 Route::group(['middleware' => 'auth'], function () {
     
@@ -134,6 +141,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/payments', 'PaymentController@store')->name('payments.store');
 
     Route::post('/comment/store/{id}','CommentController@store')->name('comment.store');
+    Route::get('/comments/{video}','CommentController@show')->name('comments');
+    Route::delete('/comment/delete/{id}','CommentController@destroy')->name('comment.destroy');
 
 });
 
