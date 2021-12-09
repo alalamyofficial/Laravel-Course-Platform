@@ -34,7 +34,7 @@ class PaymentController extends Controller
                 // ->orWhere('identifier', 'basic')
                 ->first();
             
-            $request->user()->newSubscription('default', $plan->stripe_id)->create($request->token);
+            $request->user()->newSubscription('default', $plan->stripe_id)->trialDays(30)->create($request->token);
 
             return back();
         }

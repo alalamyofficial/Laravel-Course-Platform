@@ -34,12 +34,8 @@ Vue.use(Toast);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('dashboard', require('./components/Dashboard.vue').default);
-Vue.component('category', require('./components/Category.vue').default);
 Vue.component('episodes', require('./components/Episodes.vue').default);
 Vue.component('one-video', require('./components/Video.vue').default);
-Vue.component('pricing', require('./components/Pricing.vue').default);
 Vue.component('playlist', require('./components/PlayList.vue').default);
 
 /**

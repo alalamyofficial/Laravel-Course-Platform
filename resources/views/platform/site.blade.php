@@ -82,8 +82,8 @@
               </div>
               <a href="{{route('one_series',$ser->slug)}}">
                 <h4><small>{{$ser->title}}</small></h4>
-                <p><small>By {{$ser->user->name}}</small></p>
               </a>
+              <a href="{{route('authors_series',$ser->user->id)}}"><small>By {{$ser->user->name}}</small></a>
               <div class="bottom d-flex mt-15">
                 <ul class="list">
                   <li>

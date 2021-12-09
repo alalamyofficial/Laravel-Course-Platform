@@ -20,6 +20,7 @@
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stripe ID</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stripe Status</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stripe Plan</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Trial Ends At</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quantity</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Created At</th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ">Action</th>
@@ -60,6 +61,17 @@
                         <div class="d-flex px-2">
                             <div class="my-auto">
                             <h6 class="mb-0 text-sm" style="margin-left:8px">{{$subscription->stripe_status}}</h6>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="d-flex px-2">
+                            <div class="my-auto">
+                                <h6 class="mb-0 text-sm" style="margin-left:8px">
+                                    {{ \Carbon\Carbon::parse($subscription->trial_ends_at)->diffForHumans() }}
+
+                                </h6>
                             </div>
                         </div>
                     </td>

@@ -13,13 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('platform.site');
-// });
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 //admin
 
@@ -127,7 +124,7 @@ Route::get('about','PlatformController@about')->name('about');
 Route::get('/search', 'SearchController@search')->name('search');
 
 
-Route::get('courses/{slug}','PlatformController@authors_series')->name('authors_series');
+Route::get('/{slug}/courses','PlatformController@authors_series')->name('authors_series');
 
 
 

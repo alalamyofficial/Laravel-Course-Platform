@@ -237,15 +237,70 @@ class PlatformController extends Controller
 
     }
 
-    public function authors_series($slug){
+    public function authors_series($id){
 
-        $user_id = request()->user()->id;
+        // $user_id = request()->user()->id;
 
-        $user = User::where('id',$user_id)->where('role_as','=',1);
+        // $user = User::where('slug',$slug)->where('role_as','=',1)->first();
+        $user = User::find($id);
 
-        $author_series = $user->series()->lastest()->get();
+        $settings = Setting::latest()->limit(1)->first();
+        $categories = Category::latest()->limit(5)->get();
 
-        return view('platform.series.author_courses',compact('author_series'));
+        // $author_series = $user->series()->latest()->get();
+        // $author_series = Series::where('user_id','=',$id)->latest()->get();
+
+
+        if(Auth::check()){
+
+            if(request()->user()->subscribed('default')) {
+    
+                if(request()->user()->subscription()->stripe_plan == 'price_1Jw2tgGEYw9RnssyjHUF6NPQ'){
+    
+                    $author_series = Series::latest()
+                                ->where('user_id','=',$id)
+                                ->where('plan','=','premium')
+                                ->orWhere('plan','=','basic')
+                                ->orWhere('plan','=','free')
+                                ->get();
+    
+                }elseif(request()->user()->subscription()->stripe_plan == 'price_1Jw2tgGEYw9Rnssy7diIL7io'){
+    
+                    $author_series = Series::latest()
+                                ->where('user_id','=',$id)
+                                ->where('plan','=','basic')
+                                ->where('plan','=','free')
+                                ->get();
+    
+                }elseif(request()->user()->subscription()->stripe_plan == 'price_1Jw8BBGEYw9RnssyyaAnWRJr'){
+    
+                    $author_series = Series::latest()
+                                    ->where('user_id','=',$id)
+                                    ->where('plan','=','gold')
+                                    ->where('plan','=','premium')
+                                    ->orWhere('plan','=','basic')
+                                    ->orWhere('plan','=','free')
+                                    ->get();
+    
+                }else {
+                    
+                    $author_series = Series::latest()->where('plan','=','free')->get();
+    
+                }
+    
+    
+    
+            }else{
+    
+                $author_series = Series::latest()->where('plan','=','free')->get();
+            }
+        }else{
+
+            $author_series = Series::latest()->where('plan','=','free')->get();
+        }
+
+
+        return view('platform.series.author_courses',compact('author_series','user','categories','settings'));
 
 
     }
