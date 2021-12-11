@@ -1,5 +1,4 @@
 # Laravel Course Platform
-#### Kids can use it easily
 
 #### For Admin
 ![](https://github.com/alalamyofficial/Laravel-Course-Platform/blob/master/imgs/1.PNG)
