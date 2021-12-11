@@ -54,8 +54,6 @@
     height: 24px;
  }
 
-
-
 </style>
 
 
@@ -75,10 +73,8 @@
 
         @if($nextVideo)
           :next_video="{{$nextVideo}}"
-        @else
         @endif    
 
-        :video_duration = "{{$video_duration}}"
         :current_video = "{{$current_video}}"
         :vids = "{{$vids}}"
         :user="{{Auth::id()}}"

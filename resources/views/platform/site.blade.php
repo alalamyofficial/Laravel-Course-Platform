@@ -86,23 +86,99 @@
               <a href="{{route('authors_series',$ser->user->id)}}"><small>By {{$ser->user->name}}</small></a>
               <div class="bottom d-flex mt-15">
                 <ul class="list">
+
+
+                  @if($ser->averageRating == 5 )
                   <li>
-                    <a href="#"><i class="fa fa-star"></i></a>
+                    <a><i class="fa fa-star"></i></a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-star"></i></a>
+                    <a><i class="fa fa-star"></i></a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-star"></i></a>
+                    <a><i class="fa fa-star"></i></a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-star"></i></a>
+                    <a><i class="fa fa-star"></i></a>
                   </li>
                   <li>
-                    <a href="#"><i class="fa fa-star"></i></a>
+                    <a><i class="fa fa-star"></i></a>
                   </li>
+
+                  @elseif($ser->averageRating == 4 || $ser->averageRating == 4.5)
+                  <li>
+                    <a><i class="fa fa-star"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star" style="color:black"></i></a>
+                  </li>
+
+                  @elseif($ser->averageRating == 3 || $ser->averageRating == 3.5)
+                  <li>
+                    <a><i class="fa fa-star"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star" style="color:black"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star" style="color:black"></i></a>
+                  </li>
+
+                  @elseif($ser->averageRating == 2 || $ser->averageRating == 2.5)
+                  <li>
+                    <a><i class="fa fa-star"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star" style="color:black"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star" style="color:black"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star" style="color:black"></i></a>
+                  </li>
+
+                  @elseif($ser->averageRating == 1 || $ser->averageRating == 1.5)
+                  <li>
+                    <a><i class="fa fa-star"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star" style="color:black"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star" style="color:black"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star" style="color:black"></i></a>
+                  </li>
+                  <li>
+                    <a><i class="fa fa-star" style="color:black"></i></a>
+                  </li>
+                  @else
+                    <p>
+                      <b>0</b>
+                    </p>
+                  @endif  
                 </ul>
-                <p class="ml-20">{{$series_ratings_count}} Reviews</p>
+                <p class="ml-20">{{substr($ser->averageRating,0,3)}} Reviews</p>
               </div>
             </div>
           </div>

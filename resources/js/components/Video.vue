@@ -46,23 +46,25 @@
           <h4>Latest Comments</h4>
           <br />
 
-          <div v-for="co in comments" :key="co.id">
-            <div class="comments-area mb-5">
-              <div class="comment-list">
-                <div class="single-comment single-reviews">
-                  <div class="d-flex">
-                    <div class="desc">
-                      <div class="row justify-content-between mb-4">
-                        <h5 class="user">
-                          <a href="#">{{co.user_id}} Jack Alalamey</a>
-                        </h5>
+          <div v-if="comments.length">
+            <div v-for="co in comments" :key="co.id">
+              <div class="comments-area mb-5">
+                <div class="comment-list">
+                  <div class="single-comment single-reviews">
+                    <div class="d-flex">
+                      <div class="desc">
+                        <div class="row justify-content-between mb-4">
+                          <h5 class="user">
+                            <a href="#">{{co.user_id}}</a>
+                          </h5>
 
-                        <div class="mr-3">
-                          <button @click="deleteComment(co.id)" class="btn btn-danger btn-sm">x</button>
+                          <div class="mr-3">
+                            <button @click="deleteComment(co.id)" class="btn btn-danger btn-sm">x</button>
+                          </div>
                         </div>
-                      </div>
 
-                      <p class="comment">{{co.comment}}</p>
+                        <p class="comment">{{co.comment}}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -108,7 +110,6 @@ export default {
   },
 
   mounted() {
-    console.log("Next Video is " + this.next_video.episode_number);
     this.showComments();
   },
 
@@ -127,7 +128,8 @@ export default {
     "current_video",
     "vids",
     "user_id",
-    "last_video"
+    "last_video",
+    "one_user"
     // "comments"
   ],
 
@@ -140,9 +142,14 @@ export default {
     onPlayerPlaying(player) {},
 
     onPlayerEnded() {
-
+      if (
+        this.next_video.episode_number ==
+        this.next_video.episode_number + 1
+      ) {
+        console.log("Series Done");
+      } else {
         window.location.replace(this.next_video.episode_number);
-      
+      }
     },
 
     showComments() {

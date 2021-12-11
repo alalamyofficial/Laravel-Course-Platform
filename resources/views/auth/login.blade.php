@@ -81,8 +81,8 @@
 
             <div class="text-center"><button type="submit" class="btn btn-color px-5 mb-5 w-100">Login</button></div>
             <div id="emailHelp" class="form-text text-center mb-5 text-dark">Not
-              Registered? <a href="#" class="text-dark fw-bold"> Create an
-                Account</a>
+              Registered? 
+              <a href="{{route('register')}}" class="text-dark fw-bold"> Create an Account</a>
             </div>
           </form>
         </div>

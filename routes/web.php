@@ -123,8 +123,11 @@ Route::get('about','PlatformController@about')->name('about');
 //Search Controller | Search User
 Route::get('/search', 'SearchController@search')->name('search');
 
-
+//author series
 Route::get('/{slug}/courses','PlatformController@authors_series')->name('authors_series');
+
+//newsLetter
+Route::post('newsletter','PlatformController@newsLetter')->name('newsLetter');
 
 
 

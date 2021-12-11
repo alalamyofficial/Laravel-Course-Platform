@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Laravel\Cashier\Billable;
 use RealRashid\SweetAlert\Facades\Alert;
+use Newsletter;
 use App\Category;
 use App\Series;
 use App\Video;
@@ -33,7 +34,9 @@ class PlatformController extends Controller
         $plans = Plans::get();
         $settings = Setting::latest()->limit(1)->first();
 
-        return view('platform.site',compact('categories','series','plans','settings','series_ratings_count'));
+
+        return view('platform.site',compact('categories','series','plans',
+        'settings','series_ratings_count'));
 
     }
 
@@ -56,9 +59,6 @@ class PlatformController extends Controller
 
         $rating = Rating::first(); 
         
-        // $getID3 = new \getID3;
-        // $file = $getID3->analyze($video_path);
-        // $duration = date('H:i:s.v', $file['playtime_seconds']);
         
         $current_url = Url::current();
 
@@ -74,10 +74,6 @@ class PlatformController extends Controller
         $categories = Category::latest()->limit(5)->get();
         $one_video = $series->videos()->where('episode_number',$episode_number)->first();
         $settings = Setting::latest()->limit(1)->first();
-
-        $video_duration = $series->videos()->where('episode_number',$episode_number)->first();
-
-
 
         $seriesID = $request->series_id;
 
@@ -102,6 +98,10 @@ class PlatformController extends Controller
 
         $comments = Comment::where('video_id',$one_video->id)->latest()->get(); 
 
+        $comment = Comment::where('video_id',$one_video->id)->first(); 
+
+
+
         $current_url = URL::current();
 
         $current_video = $series->videos()->where('episode_number','=', $episode_number)->first();
@@ -110,8 +110,8 @@ class PlatformController extends Controller
             compact(
                 'categories','series','one_video','videos',
                 'nextVideo','prevVideo','first_video','last_video',
-                'series_videos','settings','comments','video_duration'
-                ,'current_url','current_video','vids'
+                'series_videos','settings','comments'
+                ,'current_url','current_video','vids','comment'
             )
         );        
 
@@ -122,7 +122,7 @@ class PlatformController extends Controller
     public function seriesStar (Request $request, Series $series) {
         $rating = new Rating;
         $rating->user_id = Auth::id();
-        $rating->rating = $request->input('star');
+        $rating->rating = $request->rate;
         $rating->feedback = $request->feedback;
         $series->ratings()->save($rating);
         toast('Your Rating has Been Successfully!','success');
@@ -130,15 +130,6 @@ class PlatformController extends Controller
     }
 
     
-    // public function updateSeriesStar (Request $request, $user_id) {
-
-
-    //     $rating = DB::table('ratings')->where('user_id',$user_id)->first();
-
-    //     $rating->destroy($user_id);
-
-    //     return redirect()->back();
-    // }
 
     public function plans() {
         $plans = Plans::get();
@@ -239,16 +230,12 @@ class PlatformController extends Controller
 
     public function authors_series($id){
 
-        // $user_id = request()->user()->id;
 
-        // $user = User::where('slug',$slug)->where('role_as','=',1)->first();
         $user = User::find($id);
 
         $settings = Setting::latest()->limit(1)->first();
         $categories = Category::latest()->limit(5)->get();
 
-        // $author_series = $user->series()->latest()->get();
-        // $author_series = Series::where('user_id','=',$id)->latest()->get();
 
 
         if(Auth::check()){
@@ -284,7 +271,7 @@ class PlatformController extends Controller
     
                 }else {
                     
-                    $author_series = Series::latest()->where('plan','=','free')->get();
+                    $author_series = Series::latest()->where('user_id','=',$id)->where('plan','=','free')->get();
     
                 }
     
@@ -292,17 +279,29 @@ class PlatformController extends Controller
     
             }else{
     
-                $author_series = Series::latest()->where('plan','=','free')->get();
+                $author_series = Series::latest()->where('user_id','=',$id)->where('plan','=','free')->get();
             }
         }else{
 
-            $author_series = Series::latest()->where('plan','=','free')->get();
+            $author_series = Series::latest()->where('user_id','=',$id)->where('plan','=','free')->get();
         }
 
 
         return view('platform.series.author_courses',compact('author_series','user','categories','settings'));
 
 
+    }
+
+    public function newsLetter(Request $request)
+    {
+        if ( ! Newsletter::isSubscribed($request->email) ) {
+            Newsletter::subscribe($request->email);
+        }else{
+            toast('You has Been Subscribed!','info');
+            return redirect()->back();
+        }
+        toast('You Subscribed Successfully!','success');
+        return redirect()->back();
     }
 
 }

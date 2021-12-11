@@ -1984,14 +1984,15 @@ __webpack_require__.r(__webpack_exports__);
     return {
       play: true,
       current: this.current_video.episode_number,
-      video_comments: []
+      video_comments: [],
+      time: '00:00'
     };
   },
   props: ["series_videos", "current_video", 'one_video'],
   mounted: function mounted() {
-    console.log(this.series_videos); // console.log("<br/>");
-    // console.log(this.vids);
-  }
+    console.log(this.series_videos);
+  },
+  methods: {}
 });
 
 /***/ }),
@@ -2006,6 +2007,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PlayList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PlayList */ "./resources/js/components/PlayList.vue");
+//
+//
 //
 //
 //
@@ -2110,7 +2113,6 @@ __webpack_require__.r(__webpack_exports__);
     playlist: _PlayList__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mounted: function mounted() {
-    console.log("Next Video is " + this.next_video.episode_number);
     this.showComments();
   },
   computed: {
@@ -2118,7 +2120,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.$refs.videoPlayer.player;
     }
   },
-  props: ["one_video", "series", "next_video", "video_duration", "series_videos", "current_video", "vids", "user_id", "last_video" // "comments"
+  props: ["one_video", "series", "next_video", "video_duration", "series_videos", "current_video", "vids", "user_id", "last_video", "one_user" // "comments"
   ],
   methods: {
     onPlayerCanplay: function onPlayerCanplay(player) {
@@ -2127,7 +2129,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     onPlayerPlaying: function onPlayerPlaying(player) {},
     onPlayerEnded: function onPlayerEnded() {
-      window.location.replace(this.next_video.episode_number);
+      if (this.next_video.episode_number == this.next_video.episode_number + 1) {
+        console.log("Series Done");
+      } else {
+        window.location.replace(this.next_video.episode_number);
+      }
     },
     showComments: function showComments() {
       var _this = this;
@@ -6595,7 +6601,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.bg {\r\n  background-color: #ededed;\n}\n.vid_template {\r\n  background-color: floralwhite;\r\n  /* background-image: url(\"https://zellusmarketing.com/wp-content/uploads/2021/03/icon-4.5s-317px-1.gif\");\r\n   */\r\n\r\n  padding: 2px;\n}\n.vid_template > .pl{\r\n    display: none;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.bg {\r\n  background-color: #ededed;\n}\n.vid_template {\r\n  background-color: floralwhite;\r\n  /* background-image: url(\"https://zellusmarketing.com/wp-content/uploads/2021/03/icon-4.5s-317px-1.gif\");\r\n   */\r\n\r\n  padding: 2px;\n}\n.vid_template > .pl{\r\n    display: none;\n}\n*::-webkit-scrollbar,\r\n*::-webkit-scrollbar-thumb {\r\n  width: 26px;\r\n  border-radius: 13px;\r\n  background-clip: padding-box;\r\n  border: 10px solid transparent;\n}\n*::-webkit-scrollbar-thumb {        \r\n  box-shadow: inset 0 0 0 10px;\n}\n#playlist:hover {\r\n  color: rgba(0, 0, 0, 0.3);\n}\n#playlist {\r\n  background: white;\r\n  padding: 20px;\r\n  width: 500px;\r\n  height: 630px;\r\n  /* margin: 100px auto; */\r\n  border-radius: 3px;\r\n  overflow: auto;\r\n  color: rgba(0, 0, 0, 0);\r\n  -webkit-text-fill-color: black;\r\n  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);\r\n  transition: color .3s ease;\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -65982,12 +65988,13 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { attrs: { id: "playlist" } }, [
     _c(
       "div",
       { staticClass: "bg" },
       [
-        _c("h2", [_vm._v("Series")]),
+        _c("center", [_c("h2", [_vm._v("Series")])]),
+        _c("hr"),
         _vm._v(" "),
         _vm._l(_vm.series_videos, function (video) {
           return _c("div", { key: video.episode_number }, [
@@ -66004,7 +66011,11 @@ var render = function () {
                   _c("div", { staticClass: "d-flex" }, [
                     _c("video", {
                       staticClass: "img-thumbnail",
-                      attrs: { src: "/" + video.video, width: "100px" },
+                      attrs: {
+                        id: "myvid",
+                        src: "/" + video.video,
+                        width: "100px",
+                      },
                     }),
                     _vm._v(" "),
                     _c("div", { staticClass: "col ml-5 mr-3" }, [
@@ -66124,121 +66135,121 @@ var render = function () {
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "content" },
-          [
-            _c("div", { staticClass: "feedeback" }, [
-              _c("h6", { staticClass: "mb-10" }, [_vm._v("Write a Comment")]),
-              _vm._v(" "),
-              _c(
-                "form",
-                {
-                  on: {
-                    submit: function ($event) {
-                      $event.preventDefault()
-                      return _vm.postComment.apply(null, arguments)
-                    },
+        _c("div", { staticClass: "content" }, [
+          _c("div", { staticClass: "feedeback" }, [
+            _c("h6", { staticClass: "mb-10" }, [_vm._v("Write a Comment")]),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function ($event) {
+                    $event.preventDefault()
+                    return _vm.postComment.apply(null, arguments)
                   },
                 },
-                [
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.comment,
-                        expression: "comment",
-                      },
-                    ],
-                    staticClass: "form-control",
-                    attrs: { name: "comment", cols: "10", rows: "10" },
-                    domProps: { value: _vm.comment },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.comment = $event.target.value
-                      },
+              },
+              [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.comment,
+                      expression: "comment",
                     },
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "mt-10 text-right" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "genric-btn primary circle",
-                        on: { submit: _vm.postComment },
-                      },
-                      [_vm._v("Submit")]
-                    ),
-                  ]),
-                ]
-              ),
-            ]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c("h4", [_vm._v("Latest Comments")]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _vm._l(_vm.comments, function (co) {
-              return _c("div", { key: co.id }, [
-                _c("div", { staticClass: "comments-area mb-5" }, [
-                  _c("div", { staticClass: "comment-list" }, [
-                    _c(
-                      "div",
-                      { staticClass: "single-comment single-reviews" },
-                      [
-                        _c("div", { staticClass: "d-flex" }, [
-                          _c("div", { staticClass: "desc" }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "row justify-content-between mb-4",
-                              },
-                              [
-                                _c("h5", { staticClass: "user" }, [
-                                  _c("a", { attrs: { href: "#" } }, [
-                                    _vm._v(
-                                      _vm._s(co.user_id) + " Jack Alalamey"
-                                    ),
-                                  ]),
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "mr-3" }, [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-danger btn-sm",
-                                      on: {
-                                        click: function ($event) {
-                                          return _vm.deleteComment(co.id)
-                                        },
-                                      },
-                                    },
-                                    [_vm._v("x")]
-                                  ),
-                                ]),
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "comment" }, [
-                              _vm._v(_vm._s(co.comment)),
-                            ]),
-                          ]),
-                        ]),
-                      ]
-                    ),
-                  ]),
+                  ],
+                  staticClass: "form-control",
+                  attrs: { name: "comment", cols: "10", rows: "10" },
+                  domProps: { value: _vm.comment },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.comment = $event.target.value
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-10 text-right" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "genric-btn primary circle",
+                      on: { submit: _vm.postComment },
+                    },
+                    [_vm._v("Submit")]
+                  ),
                 ]),
-              ])
-            }),
-          ],
-          2
-        ),
+              ]
+            ),
+          ]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("h4", [_vm._v("Latest Comments")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _vm.comments.length
+            ? _c(
+                "div",
+                _vm._l(_vm.comments, function (co) {
+                  return _c("div", { key: co.id }, [
+                    _c("div", { staticClass: "comments-area mb-5" }, [
+                      _c("div", { staticClass: "comment-list" }, [
+                        _c(
+                          "div",
+                          { staticClass: "single-comment single-reviews" },
+                          [
+                            _c("div", { staticClass: "d-flex" }, [
+                              _c("div", { staticClass: "desc" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "row justify-content-between mb-4",
+                                  },
+                                  [
+                                    _c("h5", { staticClass: "user" }, [
+                                      _c("a", { attrs: { href: "#" } }, [
+                                        _vm._v(_vm._s(co.user_id)),
+                                      ]),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "mr-3" }, [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-danger btn-sm",
+                                          on: {
+                                            click: function ($event) {
+                                              return _vm.deleteComment(co.id)
+                                            },
+                                          },
+                                        },
+                                        [_vm._v("x")]
+                                      ),
+                                    ]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "comment" }, [
+                                  _vm._v(_vm._s(co.comment)),
+                                ]),
+                              ]),
+                            ]),
+                          ]
+                        ),
+                      ]),
+                    ]),
+                  ])
+                }),
+                0
+              )
+            : _vm._e(),
+        ]),
       ]),
     ]),
   ])
