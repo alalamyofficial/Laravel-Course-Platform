@@ -9,7 +9,9 @@ class Series extends Model
 {
     use Rateable;
 
-    // protected $fillable = ["image","title","description","category"];
+    public $with = ['user','videos','ratings','category']; 
+
+
     protected $guarded = [];
 
 

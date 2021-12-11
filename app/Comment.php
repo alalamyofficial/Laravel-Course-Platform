@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
+    public $with = ['user','video']; 
+
+
     protected $guarded = [];
 
     public function user(){
